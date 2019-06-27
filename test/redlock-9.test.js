@@ -1,7 +1,7 @@
 'use strict';
 
 const mock = require('egg-mock');
-/*
+
 describe('test/redlock-9.test.js', () => {
   let app;
   before(() => {
@@ -21,7 +21,7 @@ describe('test/redlock-9.test.js', () => {
       .expect(200);
   });
 });
-*/
+
 describe('test/redlock-9.test.1.js', () => {
   let app;
   before(() => {
