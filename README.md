@@ -4,6 +4,7 @@
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
 
+[node-image]: https://img.shields.io/badge/node-%3E%3D8-blue.svg
 [npm-image]: https://img.shields.io/npm/v/egg-redlock-9.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-redlock-9
 [download-image]: https://img.shields.io/npm/dm/egg-redlock-9.svg?style=flat-square
@@ -45,8 +46,8 @@ exports.redlock9 = {
     retryDelay: 200, // time in ms
     retryJitter: 50, // time in ms
 };
-
-
+```
+```js
 // {app_root}/app/****.js
 await app.redlock9.run(resouce, ttl, async (lock) => { /* do something */ }); // run in lock
 const success = await app.redlock9.once(resouce, async (lock)=>{ /* do something */ }, wait, duration) // run only once during the duration 

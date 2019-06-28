@@ -4,6 +4,7 @@
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
 
+[node-image]: https://img.shields.io/badge/node-%3E%3D8-blue.svg
 [npm-image]: https://img.shields.io/npm/v/egg-redlock-9.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-redlock-9
 [download-image]: https://img.shields.io/npm/dm/egg-redlock-9.svg?style=flat-square
@@ -40,10 +41,9 @@ exports.redlock9 = {
     retryDelay: 200,
     retryJitter: 50,
 };
-
-
+```
+```js
 // {app_root}/app/****.js
-
 await app.redlock9.run(resouce, ttl, async (lock) => { /* 在这里完成你的任务 */ }); // 利用分布式锁执行任务
 const success = await app.redlock9.once(resouce, async (lock)=>{ /* 在这里完成你的任务 */ }, wait, duration) // 在执行在持续时间内只执行一次的任务 
 
