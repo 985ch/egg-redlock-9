@@ -1,7 +1,7 @@
 {
   "name": "egg-redlock-9",
   "version": "1.0.0",
-  "description": "a egg redlock plugin",
+  "description": "An easy-to-use egg plugin that implements distributed locks based on redlock",
   "eggPlugin": {
     "name": "redlock9",
     "dependencies": [
@@ -11,7 +11,10 @@
   "keywords": [
     "egg",
     "eggPlugin",
-    "egg-plugin"
+    "egg-plugin",
+    "redlock",
+    "locker",
+    "lock"
   ],
   "dependencies": {
     "egg-redis": "^2.4.0",

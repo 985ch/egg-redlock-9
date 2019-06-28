@@ -1,49 +1,23 @@
 # egg-redlock-9
 
+![node version][node-image]
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![David deps][david-image]][david-url]
-[![Known Vulnerabilities][snyk-image]][snyk-url]
 [![npm download][download-image]][download-url]
 
 [npm-image]: https://img.shields.io/npm/v/egg-redlock-9.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-redlock-9
-[travis-image]: https://img.shields.io/travis/eggjs/egg-redlock-9.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-redlock-9
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-redlock-9.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-redlock-9?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-redlock-9.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-redlock-9
-[snyk-image]: https://snyk.io/test/npm/egg-redlock-9/badge.svg?style=flat-square
-[snyk-url]: https://snyk.io/test/npm/egg-redlock-9
 [download-image]: https://img.shields.io/npm/dm/egg-redlock-9.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-redlock-9
 
-<!--
-Description here.
--->
+该插件通过引用[redlock](https://github.com/mike-marcacci/node-redlock)实现了分布式锁，并且在其基础上补充了run和once两个方法
 
 ## 依赖说明
 
-### 依赖的 egg 版本
-
-egg-redlock-9 版本 | egg 1.x
---- | ---
-1.x | 😁
-0.x | ❌
-
 ### 依赖的插件
-<!--
 
-如果有依赖其它插件，请在这里特别说明。如
+- [egg-redis](https://github.com/eggjs/egg-redis)
 
-- security
-- multipart
-
--->
-
-## 开启插件
+## 使用方式
 
 ```js
 // config/plugin.js
@@ -52,12 +26,30 @@ exports.redlock9 = {
   package: 'egg-redlock-9',
 };
 ```
+```js
+// {app_root}/config/config.default.js
+exports.redis = {
+  /* 这里是你的redis设置 */
+}
+exports.redlock9 = {
+  clients: [ 'redis1', 'redis2', 'redis3' ], // 在这里配置对应的redis客户端，也可用client来配置单个客户端，若egg-redis没有配置clients可以省略该配置
+  logger: app => e => app.info(e.message), // 获取锁失败时输出日志用的函数，可以省略
+  options: { // redlock自带选项
+    driftFactor: 0.01,
+    retryCount: 5,
+    retryDelay: 200,
+    retryJitter: 50,
+};
 
-## 使用场景
 
-- Why and What: 描述为什么会有这个插件，它主要在完成一件什么事情。
-尽可能描述详细。
-- How: 描述这个插件是怎样使用的，具体的示例代码，甚至提供一个完整的示例，并给出链接。
+// {app_root}/app/****.js
+
+await app.redlock9.run(resouce, ttl, async (lock) => { /* 在这里完成你的任务 */ }); // 利用分布式锁执行任务
+const success = await app.redlock9.once(resouce, async (lock)=>{ /* 在这里完成你的任务 */ }, wait, duration) // 在执行在持续时间内只执行一次的任务 
+
+//你也可以在redlock9对象上直接使用redlock的方法，如：app.redlock.unlock(lock)
+```
+在这里查看[redlock](https://github.com/mike-marcacci/node-redlock#api-docs)的方法
 
 ## 详细配置
 
@@ -65,11 +57,10 @@ exports.redlock9 = {
 
 ## 单元测试
 
-<!-- 描述如何在单元测试中使用此插件，例如 schedule 如何触发。无则省略。-->
-
-## 提问交流
-
-请到 [egg issues](https://github.com/eggjs/egg/issues) 异步交流。
+请先在本地启动一个redis服务器
+```sh
+npm run test
+```
 
 ## License
 

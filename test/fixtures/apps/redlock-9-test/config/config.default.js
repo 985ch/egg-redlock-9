@@ -12,6 +12,7 @@ exports.redis = {
 };
 
 exports.redlock9 = {
+  logger: app => e => app.logger.info(e.message),
   options: {
     // the expected clock drift; for more details
     // see http://redis.io/topics/distlock
