@@ -1,6 +1,6 @@
 {
   "name": "egg-redlock-9",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An easy-to-use egg plugin that implements distributed locks based on redlock",
   "eggPlugin": {
     "name": "redlock9",
